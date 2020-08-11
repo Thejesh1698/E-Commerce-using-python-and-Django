@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div id="advertisements">
+    advertisements here
+
+    </div>
+
+    <div id="trending-products">
+    <br>
+    ------------------------------------------------ TRENDING PRODUCTS ------------------------------------------------
+        <ul>
+
+            {%  for product,price in context %}
+                <a href="{{ product.get_absolute_url }}" target='_blank' >
+                    <li>
+
+                        <div class="product-pic">
+                            {% if product.product_discount != 0 %}
+                                <div class="discount">
+                                    &nbsp;{{ product.product_discount }} % off &nbsp;
+                                </div>
+                            {% endif %}
+                            <img src="{{ product.product_img.url }}" alt="check again">
+                        </div>
+
+                        <div class="product-name">
+                            {{ product.product_name }}<br>
+                        </div>
+
+                        <div class="product-price">
+                            {% if product.product_discount != 0 %}
+                                Price: Rs. &nbsp;<strike>{{ product.product_price }} </strike> &nbsp;&nbsp;{{ price }}
+                            {% elif product.product_discount == 0 %}
+                                Price: Rs. {{ product.product_price }}<br>
+                            {% endif %}
+                        </div>
+                    </li>
+                </a>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+{% endblock %}
+
+</body>
+</html>

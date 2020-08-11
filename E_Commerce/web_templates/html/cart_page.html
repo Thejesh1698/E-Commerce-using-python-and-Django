@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+</head>
+
+<body>
+
+{% block content %}
+    <div id="main_body_cart">
+    <div id="background_effect_1_cart">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    <br>
+        <div id="cart_list_cart">
+            <div id="header1_cart"><b>
+                {% if empty %}
+                    Number of products in cart: 0
+                {% else %}
+                    Number of products in cart: {{ cart_size }}
+                {% endif %}
+            </b></div>
+            <div id="header2_cart">
+                <b>Total price of the cart:
+                {% if discounted %}
+                    Rs. <strike>{{ total_actual_cart_cost }}</strike> &nbsp;{{ total_discounted_cart_cost }}
+                {% elif empty%}
+                    Rs. 0
+                {% else %}
+                    Rs. {{ total_actual_cart_cost }}
+                {% endif %}</b>
+            </div>
+            <table>
+                {% if empty %}
+                    <tr>
+                    <td colspan="3" id="empty_cart">
+                        <img src="{% static 'Images/sad_emoji.png' %}" alt="try again"><br>
+                        !! Oops. Your Cart is empty !! <br><br>
+                        Carts feel lonely if they are empty. They have feelings too :P<br><br>
+                        So add some products here :)
+
+                    </td>
+                    </tr>
+                {% else %}
+                    {% for cart,price in context %}
+                        <tr>
+                            <td class="product_image_cart"><img src="{{ cart.product.product_img.url }}" alt="check again"></td>
+                            <td class="product_description_cart">
+                                <div class="product_name_cart">{{cart.product.product_name}}</div>
+                                <div class="product_type_cart">{{cart.product.product_type}}</div>
+                                <div class="product_brand_cart">{{cart.product.product_brand}}</div>
+                                <div>
+                                    Quantity: <a href="{{cart.product.get_cart_url}}" class="a_class text_blue"><b>+</b> </a>
+                                    {{cart.quantity}}
+                                    <a href="{{cart.product.get_decrease_cart_url}}" class="a_class text_blue"><b>-</b> </a>
+                                </div>
+                            </td>
+                            <td class="product_price_cart">
+                                {% if cart.product.product_discount != 0 %}
+                                    <strike>Rs. {{cart.get_total}}</strike><br>
+                                    Rs. {{price}} only<br>
+                                    (Discount: {{cart.product.product_discount}} % applied )
+                                {% else %}
+                                    Rs. {{ cart.get_total }}
+                                {% endif %}
+
+                                <a class="product_remove_cart" href="{{ cart.product.get_remove_cart_url }}">Remove</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+        <div id="cart_cost_cart">
+            <a id="continue_shopping_cart" class="a_class" href="/"> Continue Shopping </a>
+            <fieldset id="fieldset_cart">
+                <legend id="legend_carts">
+                    &nbsp;Detailed Billing:&nbsp;
+                </legend>
+                <table>
+                    <tr>
+                        <td class="label_cart">Cart Cost:</td>
+                        <td class="numbers_cart">
+                            {% if discounted %}
+                                Rs. {{ total_discounted_cart_cost }}
+                            {% elif empty%}
+                                Rs. 0
+                            {% else %}
+                                Rs. {{ total_actual_cart_cost }}
+                            {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td class="label_cart">GST charges: </td>
+                        <td class="numbers_cart">Rs. 0</td>
+                    </tr>
+                    <tr>
+                        <td class="label_cart">Delivery charges: </td>
+                        <td class="numbers_cart">Rs.
+                            {% if discounted %}
+                                {% if total_discounted_cart_cost < 500 %}
+                                    100
+                                {% else %}
+                                    0
+                                {% endif %}
+                            {% else %}
+                                {% if total_actual_cart_cost < 500 %}
+                                    100
+                                {% else %}
+                                    0
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label_cart">Total payable Cost: </td>
+                        <td class="numbers_cart">Rs.
+                            {% if discounted %}
+                                {% if total_discounted_cart_cost < 500 %}
+                                    {{ total_discounted_cart_cost|add:"100" }}
+                                {% else %}
+                                    {{ total_discounted_cart_cost }}
+                                {% endif %}
+                            {% else %}
+                                {% if total_actual_cart_cost < 500 %}
+                                    {{ total_discounted_cart_cost|add:"100" }}
+                                {% else %}
+                                    {{ total_actual_cart_cost }}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                <tr>
+
+                </tr>
+                </table>
+            </fieldset>
+            <a id="checkout_button_cart" class="a_class" href="address/address_page"> CHECKOUT </a>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+</body>
+
+</html>

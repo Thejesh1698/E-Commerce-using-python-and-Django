@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div id="main_body_payment">
+        <div id="background_effect_1_payment">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div id="content_payment">
+                You have &nbsp;<b><i>Rs. {{ wallet_amount }}</i></b>&nbsp; in your wallet right now.<br><br>
+                Upon deduction of &nbsp;<b><i>Rs. {{ order_cost }}</i></b>&nbsp; for this order, <br>
+                your final wallet amount will be &nbsp;<b><i>Rs. {{ resultant_amount }}</i></b> <br><br>
+                It will take 7 to 14 days (inclusive) for your order to reach depending upon your location<br><br>
+                <span id="warning_payment">( !! Warning: upon clicking buy, your order will be placed and
+                    your order money will be deducted from your wallet !! )</span><br><br>
+                <a href="pay" id="button_payment" class="a_class">BUY</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>
+

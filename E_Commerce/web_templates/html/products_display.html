@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div id="main_body_display">
+<div id="background_effect_1_display">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div id="filters_display">
+        Filters
+        <table id="table_display">
+            <tr>
+                <td colspan="2" class="td_display">Sort:</td>
+            </tr>
+            <tr class="tr_display">
+                <td>
+                    Price- High to Low:
+                </td>
+                <td>
+                    <a href="{% url url_to_access slug=slug_name value="high" %}">
+                        <input type="radio" name="sort" value="high"
+                        {% if filter == "high" %}
+                            checked
+                        {% endif %} >
+                    </a>
+
+                </td>
+            </tr>
+            <tr class="tr_display">
+                <td>
+                        Price- Low to High:
+                </td>
+                <td>
+                    <a href="{% url url_to_access slug=slug_name value="low" %}">
+                        <input type="radio" name="sort" value="low"
+                        {% if filter == "low" %}
+                                checked
+                        {% endif %} >
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="products_display">
+
+        <ul>
+            {%  for product in object_list %}
+                    <li class="li_display">
+                        <a href="{{ product.get_absolute_url }}" target='_blank' >
+                        <div class="product_pic_display">
+                            {% if product.product_discount != 0 %}
+                                <div class="discount_display">
+                                    &nbsp;{{ product.product_discount }} % off &nbsp;
+                                </div>
+                            {% endif %}
+                            <img src="{{ product.product_img.url }}" alt="check again">
+                        </div>
+
+                        <div class="product_name_display">
+                            {{ product.product_name }}<br>
+                        </div>
+
+                        <div class="product_price_display">
+                                Price: Rs. {{ product.product_price }} <br>
+                            {% if product.product_discount != 0 %}
+                                (before discount)
+                            {% endif %}
+                        </div>
+                        </a>
+                    </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

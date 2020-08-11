@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing Address</title>
+</head>
+<body>
+{% block content %}
+    <div id="main_body_billing">
+        <div id="background_effect_1_billing">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" action="proceed_to_payment" id="form_billing">
+                {% csrf_token %}
+                <br>Please Give your Billing Address<br><br>
+                <table id="table_1_billing">
+                    <tr>
+                        <td class="td_1_billing"> Address: </td>
+                        <td class="td_2_billing"> <textarea name="address" required></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="td_1_billing"> City: </td>
+                        <td class="td_2_billing">
+                            <select name="city" required>
+                                <option>City A</option>
+                                <option>City B</option>
+                                <option>City C</option>
+                                <option>City D</option>
+                                <option>City E</option>
+                                <option>City F</option>
+                                <option>City G</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_1_billing"> State: </td>
+                        <td class="td_2_billing">
+                            <select name="state" required>
+                                <option>State A</option>
+                                <option>State B</option>
+                                <option>State C</option>
+                                <option>State D</option>
+                                <option>State E</option>
+                                <option>State F</option>
+                                <option>State G</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_1_billing"> Country: </td>
+                        <td class="td_2_billing">
+                            <select name="country" required>
+                                <option>Country A</option>
+                                <option>Country B</option>
+                                <option>Country C</option>
+                                <option>Country D</option>
+                                <option>Country E</option>
+                                <option>Country F</option>
+                                <option>Country G</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_1_billing"> Zip Code: </td>
+                        <td class="td_2_billing"> <input type="text" name="zip_code" required></td>
+                    </tr>
+                    <tr>
+                        <td class="td_1_billing"> Phone Number: </td>
+                        <td class="td_2_billing"> <input type="number" name="phone_number" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" name="submit" value="Proceed to Payment" id="button_billing">
+                        </td>
+                    </tr>
+                </table>
+
+                <br><br>Your Order Information<br><br>
+                <table id="table_2_billing">
+                    {% for cart in order.orderitems.all %}
+                        <tr>
+                            <td class="td_3_billing"><img src="{{ cart.product.product_img.url }}" alt="check again"></td>
+                            <td class="td_4_billing">
+                                <div class="product_name_billing">{{cart.product.product_name}}</div>
+                                <div class="product_type_billing">{{cart.product.product_type}}</div>
+                                <div class="product_brand_billing">{{cart.product.product_brand}}</div>
+                                <div>
+                                    Quantity: {{cart.quantity}}
+                                </div>
+                            </td>
+                            <td class="td_5_billing">
+                                Rs. {{ cart.get_total }}<br>
+                                {% if cart.product.product_discount != 0 %}
+                                    ( Discount: {{cart.product.product_discount}} % applied )
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Name here</title>
+</head>
+<body>
+{% block content %}
+    <div id="main_body_detailed">
+    <form  id="product-form-detailed">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    {% csrf_token %}
+    <div id="product-pic-detailed">
+        <img src="{{ object.product_img.url }}" alt="check again">
+    </div>
+
+    <div id="product-details-detailed">
+    <div id="product-name-detailed">{{ object.product_name }}</div>
+    <div id="product-type-detailed">&nbsp;{{ object.product_type }}</div>
+    <div id="product-brand-detailed">&nbsp;{{ object.product_brand }}</div><hr>
+    <div id="product-price-detailed">&nbsp;Rs. {{ object.product_price }}
+
+    </div>
+    <div id="product-rating-detailed">
+        {% for r in rated %}
+            <img src="{% static 'Images/rating_star1.png' %}" alt="try again">
+        {% endfor %}
+        {% for r in unrated %}
+            <img src="{% static 'Images/rating_star2.png' %}" alt="try again">
+        {% endfor %}
+    </div>
+        {% if object.product_discount != 0 %}
+            ( Discount of {{ object.product_discount }} % is applicable )<br><br>
+        {% endif %}
+    <div id="product-quantity-detailed">&nbsp;Quantity left in Stock: {{ object.product_stock }} only</div>
+        &nbsp;<a id="product-submit-detailed" class="a_class" href="{{ object.get_cart_url }}">ADD TO BASKET</a>
+    <div id="product-description-detailed">
+
+        <b>Product Description</b><br><br>
+        {{ object.product_description }}
+    </div>
+    </div>
+    </form>
+    </div>
+
+{% endblock %}
+</body>
+</html>

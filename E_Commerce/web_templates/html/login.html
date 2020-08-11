@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div id="main_body_login">
+<form method="post" action="login_or_register" id="background_effect_1_login">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    {% csrf_token %}
+    <table id="login-register-form">
+        <tr>
+            <td id="login_word" class="left center">Login</td> <td id="register_word" class="right center">Register</td>
+        </tr>
+
+        <!-- ---------------------------------------------Login form---------------------------------------------  -->
+        <tr>
+            <td colspan="2"> <input type="text" placeholder="Username/Email" name="username1" class="login-form"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="password" placeholder="Password" name="password1" class="login-form"></td>
+        </tr>
+        <tr>
+            <td class="login-form left nohover"></td><td class="login-form right nohover"><a href="#" class="text_blue a_class">Forgot Password?</a> </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" name="login_or_register_button" value="Login" class="login-form button1 nohover"></td>
+        </tr>
+
+        <!--  ---------------------------------------------Register form---------------------------------------------  -->
+        <tr>
+            <td colspan="2"> <input type="text" placeholder="Username" name="username2" class="register-form"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="password" placeholder="Password" name="password2" class="register-form"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="email" placeholder="Email Address" name="email" class="register-form"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" name="login_or_register_button" value="Register" class="register-form button1 nohover"></td>
+        </tr>
+
+    </table>
+</form>
+    </div>
+
+{% endblock %}
+
+</body>
+</html>

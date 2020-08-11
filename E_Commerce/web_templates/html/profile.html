@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div id="main_body_profile">
+        <div id="background_effect_1_profile">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+        <div id="user_space_profile">
+            <div id="unchangeable_profile">
+                <div id="email_profile">
+                    Email: {{ email }}
+                </div>
+                <div id="header2_profile">
+                    YOUR PROFILE
+                </div>
+                <div id="wallet_profile">
+                    wallet amount: {{ amount }}
+                </div>
+            </div>
+            <form id="changeable_profile" method="post" action="change_profile">
+            {% csrf_token %}
+                <div id="bio_profile">
+                    <div id="username_profile"><span class="font_size_20">Username</span><br><br>
+                        <input type="text" name="username" value="{{ username }}"><br><br>
+                        <button name="save" value="username" type="submit">save</button>
+                    </div>
+
+                    <div id="phonenumber_profile"><span class="font_size_20">Phone number</span><br><br>
+                        <input type="number" name="phonenumber" value="{{ phonenumber }}"><br><br>
+                        <button name="save" value="phonenumber" type="submit">save</button>
+                    </div>
+
+                    <div id="gender_profile"><span class="font_size_20">Gender</span><br><br>
+                        <input type="radio" name="gender" value="Male"
+                               {% if male %}checked{% endif %}>&nbsp;Male
+                        <input type="radio" name="gender" value="Female"
+                               {% if female %}checked{% endif %}>&nbsp;Female
+                        <input type="radio" name="gender" value="Prefer not to say"
+                               {% if prefer_not_to_say %}checked{% endif %}>&nbsp;Prefer not to say<br><br>
+                        <button name="save" value="gender" type="submit">save</button>
+                    </div>
+
+                    <div id="dob_profile"><span class="font_size_20">Date of Birth</span><br><br>
+                        <input type="date" name="dob" value="{{dob|date:'Y-m-d'}}"><br><br>
+                        <button name="save" value="dob" type="submit">save</button>
+                    </div>
+                </div>
+                <div id="billing_addresses_profile">
+                <div id="header1_profile"> Billing Addresses</div>
+                    {% for address in billing_addresses %}
+                        <b>Billing address {{ forloop.counter }}: </b><br>
+                        {{ address.address }},&nbsp;
+                        {{ address.zipcode }}<br>
+                        {{ address.city }},&nbsp;
+                        {{ address.state }},&nbsp;
+                        {{ address.country }}<br>
+                        {{ address.phone_number }}<br><br>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

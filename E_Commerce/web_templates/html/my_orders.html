@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div id="main_body_orders">
+    <div id="background_effect_1_orders">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <table id="table_orders">
+            {% if isempty %}
+                <div id="empty_my_orders">
+                    <img src="{% static 'Images/sad_emoji.png' %}" alt="try again"><br>
+                    You haven't made any orders yet :/<br>
+                    Order things without any hesitation<br>
+                    We guarantee you the quality of it :)</div>
+            {% else %}
+                {% for order in orders %}
+                    <tr class="table_th_orders">
+                        <th>
+                            Order id: &nbsp;{{ order.orderId }}
+                        </th>
+                        <th>
+                            Ordered date: &nbsp;{{ order.ordered_date }}
+                        </th>
+                        <th>
+                            Order status: &nbsp;
+                            {% if order.delivered %}
+                                Delivered
+                            {% else %}
+                                Not Delivered
+                            {% endif %}
+                        </th>
+                    </tr>
+                    {% for cart in order.orderitems.all %}
+                        <tr class="table_tr_orders">
+                            <td class="product_image_orders"><img src="{{ cart.product.product_img.url }}" alt="check again"></td>
+                            <td class="product_description_orders">
+                                <div class="product_name_orders">{{cart.product.product_name}}</div>
+                                <div class="product_type_orders">{{cart.product.product_type}}</div>
+                                <div class="product_brand_orders">{{cart.product.product_brand}}</div>
+                                <div class="quantity_orders">
+                                    Quantity: {{cart.quantity}}
+                                </div>
+                                <div class="delivery_address_orders">
+                                    Delivery Address:<br>
+                                    {{ order.billing_address.address }},&nbsp;
+                                    {{ order.billing_address.zipcode }}<br>
+                                    {{ order.billing_address.city }},&nbsp;
+                                    {{ order.billing_address.state }},&nbsp;
+                                    {{ order.billing_address.country }}<br>
+                                    {{ order.billing_address.phone_number }}
+                                </div>
+                            </td>
+                            <td class="product_price_orders">
+                                Rs. {{ cart.get_total }}<br>
+                                {% if cart.product.product_discount != 0 %}
+                                    ( Discount: {{cart.product.product_discount}} % applied )
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table_tt_orders">
+                    <td></td><td></td><td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+    </div>
+{% endblock %}
+</body>
+</html>

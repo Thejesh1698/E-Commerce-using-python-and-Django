@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <div id="main_body_payment_done">
+        <div id="background_effect_1_payment_done">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div id="content_payment_done">
+                {% if status %}
+                    <br><span id="successful_payment_done">!!! Payment Successful !!!</span><br><br><br>
+                    Congratulations, your order is placed and is on its run to meet you soon!!<br><br>
+                    We will let you know through your mobile number and email regarding its movements :)<br><br>
+                    Orders have feelings too :P<br><br><br>
+                {% else %}
+                    <span id="failed_payment_done">!!!Payment has Failed!!!</span>
+                {% endif %}
+
+                <a id="continue_shopping_payment_done" class="a_class" href="/"> Continue Shopping </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

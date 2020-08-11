@@ -1,0 +1,74 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Company name</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/base_page_style.css' %}">
+</head>
+<body>
+
+<header>
+    <ul id="navigator-list">
+        <li id="company-logo"><a href="/">E-COMMERCE</a></li>
+        <li id="products">PRODUCTS
+            <ul id="products_display_base">
+                {% for type in product_types %}
+                    <li class="product_types_li_base"><a href="{{ type.get_absolute_url }}" >{{ type }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+
+        <li id="brands">BRANDS
+            <ul id="brands_display_base">
+                {% for brand in product_brands %}
+                    <li class="product_brands_li_base"><a href="{{ brand.get_absolute_url }}" >{{ brand }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+
+        <li id="search_li">
+            <form id="search_division" method="get" action="search">
+                <input type="text" name="search_word" placeholder="search" id="search_space">
+                <input id="search_icon" type="submit" value="Go">
+            </form>
+        </li>
+        <li id="cart">
+            <!--look into number on cart class in css if trying to edit anything here-->
+            <a href="cart_page">CART</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li id="user-profile"><a href="profile/my_profile">PROF</a>
+                <ul id="profile_display_base">
+                    <a href="profile/my_profile"><li class="profile_types_li_base">
+                        My Profile
+                    </li></a>
+                    <a href="orders/my_orders"><li class="profile_types_li_base">
+                        My Orders
+                    </li></a>
+                    <a href="loginPage/logout"><li class="profile_types_li_base">
+                        LOGOUT
+                    </li></a>
+                </ul>
+            </li>
+        {%  else %}
+            <li id="user-profile"><a href="loginPage">LOG IN</a> </li>
+        {%  endif %}
+    </ul>
+</header>
+
+<div id="content">
+{% block content %}
+{% endblock %}
+
+</div>
+
+<!--<footer>
+    Footer
+</footer>-->
+
+<script src="{% static 'js/base_js_file.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="CssUnknownProperty" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myCustomPropertiesEnabled" value="true" />
+      <option name="myIgnoreVendorSpecificProperties" value="false" />
+      <option name="myCustomPropertiesList">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="border-bottom-left" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="E_Commerce.login_and_register.views.login_or_register" />
+          <option value="E_Commerce.cart.views.home_page" />
+          <option value="E_Commerce.product_detail.views.home_page" />
+          <option value="E_Commerce.cart.models.homepage" />
+          <option value="E_Commerce.cart.models.home_page" />
+          <option value="E_Commerce.home_page.templatetags.home_page_extras.models" />
+          <option value="django.db.models.fields.related.ForeignKey.product_name" />
+          <option value="django.db.models.fields.related.ForeignKey.product_price" />
+          <option value="E_Commerce.cart.models.billing" />
+          <option value="E_Commerce.billing.views.cart" />
+          <option value="E_Commerce.home_page.models.billing" />
+          <option value="E_Commerce.login_and_register.views.home_page" />
+          <option value="E_Commerce.billing.views.home_page" />
+          <option value="E_Commerce.search_and_suggest.views.home_page" />
+          <option value="E_Commerce.home_page.views.billing" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
